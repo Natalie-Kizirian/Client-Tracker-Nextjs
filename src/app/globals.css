@@ -13,7 +13,7 @@
   --color-white: #f2f4f1;
   --color-black: #141712;
   --shadow-inset: inset 0px 4px 4px rgba(0, 0, 0, 0.1);
-  --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.15);
+  --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.1);
   --shadow-md: 0 4px 8px rgba(0, 0, 0, 0.15);
   --shadow-navbar: 0 -4px 10px rgba(0, 0, 0, 0.15);
 }
@@ -110,7 +110,7 @@ html {
 /* Stroke Button */
 
 .stroke-button-sm {
-  border: solid thin var(--color-surface);
+  border: solid 1px var(--color-surface);
   border-radius: 6px;
   padding: 8px 12px;
   cursor: pointer;
@@ -129,7 +129,6 @@ html {
 
 .stroke-button-md {
   border: solid 1px var(--color-surface);
-
   border-radius: 6px;
   padding: 10px 12px;
   cursor: pointer;
@@ -138,4 +137,18 @@ html {
   font-weight: 500;
   font-size: 14px;
   text-align: center;
+}
+input,
+textarea {
+  background-color: var(--color-background);
+  box-shadow: var(--shadow-inset);
+  padding: 8px;
+  border-radius: 8px;
+  width: 100%;
+  outline: none;
+  border: solid thin var(--color-background);
+}
+h2 {
+  font-size: 20px;
+  font-weight: 600;
 }
