@@ -1,16 +1,22 @@
+"use client";
 import FormShell from "./form-shell";
+import { addClient } from "@/lib/actions";
 
 export default function ClientForm({ onClose }) {
+  const handleSubmit = async (formData) => {
+    await addClient(formData);
+    onClose();
+  };
   return (
-    <FormShell onClose={onClose}>
+    <FormShell onClose={onClose} action={handleSubmit}>
       <h2>Client Information</h2>
       <div className="flex flex-col gap-2">
         <div>
           <label>Name</label>
-          <input type="text" required />
+          <input name="name" type="text" required />
         </div>
 
-        <textarea maxLength={75} placeholder="Add a note" />
+        <textarea name="note" maxLength={75} placeholder="Add a note" />
         <select
           className="bg-background w-full rounded-lg border border-white p-2 text-sm shadow-sm focus:outline-none"
           name="status"

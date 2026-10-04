@@ -4,7 +4,7 @@ import { LuUserRound, LuCalendar } from "react-icons/lu";
 import NavLink from "./nav-link";
 export default function Navbar() {
   return (
-    <nav className="bg-secondary shadow-navbar  rounded-2xl p-2 w-full mt-3 fixed inset-x-0 bottom-5">
+    <nav className="bg-secondary shadow-navbar fixed inset-x-0 bottom-5 mt-3 w-full rounded-2xl p-2">
       <ul className="flex items-center justify-evenly gap-2">
         <li>
           <NavLink href="/dashboard">
