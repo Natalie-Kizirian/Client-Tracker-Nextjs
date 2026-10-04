@@ -6,7 +6,7 @@ import VisitCard from "@/components/cards-container/visit-card";
 import Link from "next/link";
 import AppointmentForm from "@/components/forms/appointment-form";
 
-export default function ClientHistoryPage({ client }) {
+export default function ClientHistoryPage({ client, appointments }) {
   const [showForm, setShowForm] = useState(false);
 
   return (
@@ -24,15 +24,33 @@ export default function ClientHistoryPage({ client }) {
       </div>
       <div className="flex w-full items-center justify-between">
         <h2> {client.name} </h2>
-        <button className="stroke-button-sm bg-surface">Edit client</button>
+        <button className="bg-surface rounded-md px-3 py-2 shadow-sm">
+          Edit client
+        </button>
       </div>
-      {showForm && <AppointmentForm onClose={() => setShowForm(false)} />}
-
-
+      {showForm && (
+        <AppointmentForm
+          onClose={() => setShowForm(false)}
+          clientId={client.id}
+        />
+      )}
 
       <ContainerBackground>
-        <VisitCard />
+        {appointments.map((visit) => (
+          <VisitCard key={visit.id} {...visit} />
+        ))}
+        {appointments.length === 0 && (
+          <p className="text-center">No appointments yet.</p>
+        )}
       </ContainerBackground>
     </div>
   );
+}
+
+{
+  /* {appointments.length === 0 ? (
+          <p>No appointments yet.</p>
+        ) : (
+          appointments.map((visit) => <VisitCard key={visit.id} {...visit} />)
+        )} */
 }

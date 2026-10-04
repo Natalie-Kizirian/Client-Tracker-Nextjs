@@ -31,7 +31,7 @@ export default function ClientPage({ clients }) {
         <input
           type="text"
           placeholder="Search a client..."
-          className={classes.search}
+        
         />
 
         {/* Status */}
