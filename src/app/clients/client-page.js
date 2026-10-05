@@ -9,16 +9,13 @@ import ClientForm from "@/components/forms/client-form";
 export default function ClientPage({ clients }) {
   const statuses = ["all", "new", "active", "inactive", "one-time"];
   const [showForm, setShowForm] = useState(false);
-  //const [clients, setClients] = useState([]);
+  const [searchQuery, setSearchQuery] = useState("");
 
-  //   function handleAddClient(newClient) {
-  //     setClients((prevClients) => [
-  //       ...prevClients,
-  //       { id: Date.now(), income: 0, appointments: 0, ...newClient },
-  //     ]);
-  //     setShowForm(false);
-  //   }
-
+  const searchedClients = searchQuery
+    ? clients.filter((c) =>
+        c.name.toLowerCase().startsWith(searchQuery.toLowerCase()),
+      )
+    : clients;
   return (
     <div className="flex flex-1 flex-col items-center justify-center gap-4 pb-25">
       <div className="flex w-full flex-col gap-2">
@@ -28,10 +25,12 @@ export default function ClientPage({ clients }) {
         >
           + Add new Client
         </button>
+
+        {/* Search Bar */}
         <input
           type="text"
           placeholder="Search a client..."
-        
+          onChange={(e) => setSearchQuery(e.target.value)}
         />
 
         {/* Status */}
@@ -43,16 +42,17 @@ export default function ClientPage({ clients }) {
           ))}
         </div>
       </div>
-      <div className="w-full">
-        <p className={classes.total}>Total Income: </p>
-      </div>
+
       {showForm && <ClientForm onClose={() => setShowForm(false)} />}
 
       <ContainerBackground>
-        {clients.map((client) => (
+        {searchedClients.map((client) => (
           <ClientCard key={client.id} {...client} />
         ))}
         {clients.length === 0 && <p className="text-center">No clients yet.</p>}
+        {searchedClients.length === 0 && (
+          <p className="text-center">Client not found</p>
+        )}
       </ContainerBackground>
     </div>
   );

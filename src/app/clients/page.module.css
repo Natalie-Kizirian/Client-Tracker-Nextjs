@@ -6,12 +6,7 @@
   box-shadow: var(--shadow-inset);
   font-size: 14px;
 }
-input::placeholder {
-  color: var(--color-primary);
-}
-input:focus {
-  outline: none;
-}
+
 .status {
   background-color: var(--color-surface);
   padding: 6px;
@@ -31,4 +26,5 @@ input:focus {
   text-align: start;
   width: 100%;
   border: solid 1px var(--color-secondary);
+  
 }

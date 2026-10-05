@@ -127,6 +127,13 @@ textarea {
   border: solid thin var(--color-surface);
   font-size: 14px;
 }
+input::placeholder {
+  color: var(--color-secondary);
+}
+
+input:focus {
+  outline: none;
+}
 h2 {
   font-size: 20px;
   font-weight: 600;
