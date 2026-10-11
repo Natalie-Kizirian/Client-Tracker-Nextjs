@@ -16,6 +16,7 @@ export default function ClientHistoryPage({
 }) {
   const [showForm, setShowForm] = useState(false);
   const [showEditForm, setShowEditForm] = useState(false);
+  const [selectedAppointment, setSelectedAppointment] = useState(null);
   if (!client) {
     notFound();
   }
@@ -37,7 +38,7 @@ export default function ClientHistoryPage({
           <h2 className="capitalize"> {client.name} </h2>
           {/* edit */}
           <button
-            className="bg-surface rounded-md px-3 py-2 shadow-sm"
+            className="bg-surface cursor-pointer rounded-md px-3 py-2 shadow-sm"
             onClick={() => setShowEditForm(true)}
           >
             Edit client
@@ -57,7 +58,6 @@ export default function ClientHistoryPage({
           <p className="text-primary">{client.status} Client</p>
         </div>
       </div>
-
       {/* Appointment form */}
       {showForm && (
         <AppointmentForm
@@ -65,16 +65,27 @@ export default function ClientHistoryPage({
           clientId={client.id}
         />
       )}
-
       {/* VIsit Cards */}
       <ContainerBackground>
         {appointments.map((visit) => (
-          <VisitCard key={visit.id} {...visit} />
+          <VisitCard
+            key={visit.id}
+            {...visit}
+            onClick={() => setSelectedAppointment(visit)}
+          />
         ))}
+
         {appointments.length === 0 && (
           <p className="text-center">No appointments yet.</p>
         )}
       </ContainerBackground>
+      {selectedAppointment && (
+        <AppointmentForm
+          onClose={() => setSelectedAppointment(null)}
+          clientId={client.id}
+          appointment={selectedAppointment}
+        />
+      )}
     </div>
   );
 }
