@@ -4,6 +4,7 @@ import { addAppointments } from "@/lib/actions";
 
 export default function AppointmentForm({ onClose, clientId }) {
   const today = new Date().toISOString().split("T")[0];
+  
   const handleSubmit = async (formData) => {
     await addAppointments(clientId, formData);
     onClose();
@@ -23,11 +24,11 @@ export default function AppointmentForm({ onClose, clientId }) {
         </div>
         <div>
           <label>Price</label>
-          <input name="price" />
+          <input name="price" type="number" />
         </div>
         <div>
           <label>Tips</label>
-          <input name="tips" />
+          <input name="tips" type="number" />
         </div>
         <div>
           <select name="payment">
@@ -35,7 +36,6 @@ export default function AppointmentForm({ onClose, clientId }) {
             <option>Cash</option>
             <option>Card</option>
           </select>
-          {/*  <input name="tips" /> */}
         </div>
       </div>
     </FormShell>

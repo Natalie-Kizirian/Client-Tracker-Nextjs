@@ -7,6 +7,7 @@ import ContainerBackground from "@/components/cards-container/container-bg";
 import VisitCard from "@/components/cards-container/visit-card";
 import AppointmentForm from "@/components/forms/appointment-form";
 import classes from "../page.module.css";
+import ClientForm from "@/components/forms/client-form";
 
 export default function ClientHistoryPage({
   client,
@@ -14,6 +15,7 @@ export default function ClientHistoryPage({
   totalIncome,
 }) {
   const [showForm, setShowForm] = useState(false);
+  const [showEditForm, setShowEditForm] = useState(false);
   if (!client) {
     notFound();
   }
@@ -33,19 +35,38 @@ export default function ClientHistoryPage({
       <div className="flex w-full flex-col gap-2">
         <div className="flex w-full items-center justify-between">
           <h2 className="capitalize"> {client.name} </h2>
-          <button className="bg-surface rounded-md px-3 py-2 shadow-sm">
+          {/* edit */}
+          <button
+            className="bg-surface rounded-md px-3 py-2 shadow-sm"
+            onClick={() => setShowEditForm(true)}
+          >
             Edit client
           </button>
+          {showEditForm && (
+            <ClientForm
+              client={client}
+              onClose={() => setShowEditForm(false)}
+            />
+          )}
         </div>
-        <p className={classes.total}>Total Income: {totalIncome} $</p>
+        {/* note */}
+        {client.note.trim() && <p className={classes.note}>{client.note}</p>}
+        {/* total */}
+        <div className={classes.total}>
+          <p>Total Income: {totalIncome} $</p>
+          <p className="text-primary">{client.status} Client</p>
+        </div>
       </div>
 
+      {/* Appointment form */}
       {showForm && (
         <AppointmentForm
           onClose={() => setShowForm(false)}
           clientId={client.id}
         />
       )}
+
+      {/* VIsit Cards */}
       <ContainerBackground>
         {appointments.map((visit) => (
           <VisitCard key={visit.id} {...visit} />

@@ -1,4 +1,9 @@
-export default function FormShell({ children, onClose, action }) {
+export default function FormShell({
+  children,
+  onClose,
+  action,
+  submitLabel = "Add",
+}) {
   return (
     <div>
       <div
@@ -20,7 +25,7 @@ export default function FormShell({ children, onClose, action }) {
             Cancel
           </button>
           <button type="submit" className="primary-button-md w-full">
-            Add
+             {submitLabel}
           </button>
         </div>
       </form>

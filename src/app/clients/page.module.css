@@ -25,6 +25,22 @@
   border-radius: 8px;
   text-align: start;
   width: 100%;
-  border: solid 1px var(--color-secondary);
-  
+  border: solid 1px var(--color-white);
+  display: flex;
+  justify-content: space-between;
+  text-transform: capitalize;
+}
+.note {
+  width: 100%;
+  background-color: var(--color-surface);
+  border-radius: 4px;
+  border: 1px solid var(--Color-Secondary, #b8c3b1);
+  background: var(--Color-Surface, #d7ded3);
+  display: flex;
+  height: 67px;
+  padding: 8px;
+  align-items: flex-start;
+  gap: 10px;
+  align-self: stretch;
+  color: var(--color-primary);
 }
