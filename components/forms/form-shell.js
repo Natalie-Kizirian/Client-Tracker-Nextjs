@@ -3,6 +3,7 @@ export default function FormShell({
   onClose,
   action,
   submitLabel = "Add",
+  onDelete,
 }) {
   return (
     <div>
@@ -13,10 +14,11 @@ export default function FormShell({
 
       <form
         action={action}
-        className="bg-surface fixed top-20 left-1/2 z-20 flex -translate-x-1/2 flex-col gap-4 rounded-md p-3 drop-shadow-lg min-[320px]:w-[85vw] lg:w-1/2"
+        className="bg-surface fixed top-20 left-1/2 z-20 flex -translate-x-1/2 flex-col items-end gap-4 rounded-md p-3 drop-shadow-lg min-[320px]:w-[85vw] lg:w-1/2"
       >
         {children}
-        <div className="flex justify-between gap-5">
+
+        <div className="flex w-full justify-between gap-5">
           <button
             type="button"
             onClick={onClose}
@@ -25,9 +27,18 @@ export default function FormShell({
             Cancel
           </button>
           <button type="submit" className="primary-button-md w-full">
-             {submitLabel}
+            {submitLabel}
           </button>
         </div>
+        {onDelete && (
+          <button
+            type="button"
+            onClick={onDelete}
+            className="text-primary-active cursor-pointer p-1"
+          >
+            Delete
+          </button>
+        )}
       </form>
     </div>
   );

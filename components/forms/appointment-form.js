@@ -1,6 +1,8 @@
 "use client";
 import FormShell from "./form-shell";
-import { addAppointments, updateVisit } from "@/lib/actions";
+import { addAppointments, updateVisit, deleteVisit } from "@/lib/actions";
+import { useState } from "react";
+import ConfirmModal from "./confirm-modal";
 
 export default function AppointmentForm({ onClose, clientId, appointment }) {
   const today = new Date().toISOString().split("T")[0];
@@ -13,18 +15,29 @@ export default function AppointmentForm({ onClose, clientId, appointment }) {
     }
     onClose();
   };
+  const [showConfirm, setShowConfirm] = useState(false);
+
+  const handleDelete = async () => {
+    await deleteVisit(appointment.id);
+    onClose();
+  };
   return (
     <FormShell
       onClose={onClose}
       action={handleSubmit}
       submitLabel={appointment ? "Save" : "Add"}
+      onDelete={appointment ? () => setShowConfirm(true) : undefined}
     >
-      <h2>Appointment Details</h2>
-      <div className="flex flex-col gap-2">
+      <div className="flex w-full flex-col gap-2">
+        <h2>Appointment Details</h2>
         <div>
           <label>Date</label>
-          <input type="date" name="date" defaultValue={today} required />
-          {/* defaultValue={selectedDate || today} */}
+          <input
+            type="date"
+            name="date"
+            defaultValue={appointment?.date || today}
+            required
+          />
         </div>
         <div>
           <label>Service</label>
@@ -46,6 +59,13 @@ export default function AppointmentForm({ onClose, clientId, appointment }) {
           </select>
         </div>
       </div>
+      {showConfirm && (
+        <ConfirmModal
+          message="Delete thsi appointment?"
+          onConfirm={handleDelete}
+          onCancel={() => setShowConfirm(false)}
+        />
+      )}
     </FormShell>
   );
 }
