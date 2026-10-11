@@ -9,14 +9,16 @@ export default function VisitCard({ service, date, price, tips, payment }) {
     <div className="bg-surface border-background flex flex-col gap-1 rounded-xl border p-2 shadow-sm">
       <h1 className="font-semibold">{service}</h1>
 
-      <div className="border-secondary flex gap-2 justify-between border-b pb-2">
+      <div className="border-secondary flex justify-between gap-2 border-b pb-2">
         <p className={infoStyle}>{formattedDate}</p>
         <p className={infoStyle}>{price}$</p>
         <p className={infoStyle}>Τips:{tips}$ </p>
         <p className={infoStyle}>{payment}</p>
       </div>
 
-      <p className="text-sm font-semibold">Total Amount: {Number(price) + Number(tips)}$</p>
+      <p className="text-sm font-semibold">
+        Total Amount: {Number(price) + Number(tips)}$
+      </p>
     </div>
   );
 }

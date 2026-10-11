@@ -9,7 +9,7 @@ export default async function HistoryPage({ params }) {
   const { clientSlug } = await params;
   const client = await getClientBySlug(clientSlug);
   const appointments = client ? await getAppointmentsByClientId(client.id) : [];
-  const totalIncome = client ? await getClientTotalIncome(client.id) : 0;
+  const totalIncome = client ? await getClientTotalIncome(client.id) : null;
 
   return (
     <div className="mb-22">
@@ -21,3 +21,4 @@ export default async function HistoryPage({ params }) {
     </div>
   );
 }
+  

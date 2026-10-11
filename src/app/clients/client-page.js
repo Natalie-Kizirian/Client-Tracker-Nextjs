@@ -50,9 +50,6 @@ export default function ClientPage({ clients }) {
           <ClientCard key={client.id} {...client} />
         ))}
         {clients.length === 0 && <p className="text-center">No clients yet.</p>}
-        {searchedClients.length === 0 && (
-          <p className="text-center">Client not found</p>
-        )}
       </ContainerBackground>
     </div>
   );

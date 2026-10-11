@@ -1,5 +1,6 @@
 "use client";
 import { useState } from "react";
+import { notFound } from "next/navigation";
 import { IoChevronBackOutline } from "react-icons/io5";
 import Link from "next/link";
 import ContainerBackground from "@/components/cards-container/container-bg";
@@ -13,7 +14,9 @@ export default function ClientHistoryPage({
   totalIncome,
 }) {
   const [showForm, setShowForm] = useState(false);
-
+  if (!client) {
+    notFound();
+  }
   return (
     <div className="flex flex-1 flex-col items-center justify-center gap-4">
       <div className="flex w-full items-center justify-between text-black">
