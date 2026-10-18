@@ -7,10 +7,10 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body
         suppressHydrationWarning
-        className="flex min-h-screen flex-col  md:m-auto md:w-1/2 "
+        className="flex min-h-screen flex-col md:m-auto md:w-1/2"
       >
-        <h1 className="p-11 text-center text-3xl">CLIENT TRACKER</h1>
-        <main className="flex-1 p-3">{children}</main>
+        <h1 className="p-10 text-center text-3xl">CLIENT TRACKER</h1>
+        <main className="p-2">{children}</main>
         <Navbar />
       </body>
     </html>
