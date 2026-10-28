@@ -1,6 +1,7 @@
 "use client";
 import { useState } from "react";
-import { getCalendarDays } from "@/lib/calendar";
+import { getCalendarDays, getDateKey } from "@/lib/calendar";
+import Link from "next/link";
 
 const WEEKDAYS = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
 const MONTHS = [
@@ -18,7 +19,7 @@ const MONTHS = [
   "December",
 ];
 
-export default function MonthView() {
+export default function MonthView({ appointments, clients }) {
   const [currentDate, setCurrentDate] = useState(new Date());
 
   const days = getCalendarDays(currentDate); // οι μέρες του grid για τον τρέχοντα μήνα
@@ -34,10 +35,21 @@ export default function MonthView() {
     currentDate.getMonth() + 1,
     1,
   );
+  /* Appointments */
+  const appointmentsByDate = {};
+  for (const appointment of appointments) {
+    if (!appointmentsByDate[appointment.date]) {
+      appointmentsByDate[appointment.date] = [];
+    }
+    appointmentsByDate[appointment.date].push(appointment);
+  }
+  //console.log(appointmentsByDate);
+  //console.log("appointments:", appointments);
 
   return (
     <div className="flex w-full flex-col gap-2 pb-25">
       <div className="flex justify-between text-sm">
+        {/* Prev Month */}
         <button
           className="w-full cursor-pointer text-center"
           onClick={() => setCurrentDate(prev)}
@@ -45,12 +57,12 @@ export default function MonthView() {
           <p>{prev.getFullYear()}</p>
           <p>{MONTHS[prev.getMonth()]}</p>
         </button>
-
+        {/* Current Month */}
         <div className="w-full text-center text-lg font-semibold">
           <p>{currentDate.getFullYear()}</p>
           <p>{MONTHS[currentDate.getMonth()]}</p>
         </div>
-
+        {/* Next Month */}
         <button
           className="w-full cursor-pointer text-center"
           onClick={() => setCurrentDate(next)}
@@ -59,26 +71,50 @@ export default function MonthView() {
           <p>{MONTHS[next.getMonth()]}</p>
         </button>
       </div>
-
-      <div className="grid w-full grid-cols-7 gap-1 rounded-sm ">
+      {/* Weekdays */}
+      <div className="grid w-full grid-cols-7 gap-1 rounded-sm">
         {WEEKDAYS.map((day) => (
           <p key={day} className="text-center text-xs">
             {day}
           </p>
         ))}
 
-        {days.map((date) => (
-          <div
-            key={date.toDateString()}
-            className={`min-h-16 rounded-md p-1 text-center text-xs ${
-              date.toDateString() === today
-                ? "bg-primary-active/60"
-                : "bg-surface"
-            }`}
-          >
-            <span className="text-xs">{date.getDate()}</span>
-          </div>
-        ))}
+        {/* Days */}
+        {days.map((date) => {
+          const dateKey = getDateKey(date);
+
+          let dayAppointments;
+          if (appointmentsByDate[dateKey]) {
+            dayAppointments = appointmentsByDate[dateKey];
+          } else {
+            dayAppointments = [];
+          }
+
+          return (
+            <Link
+              href={`/calendar/${dateKey}`}
+              key={date.toDateString()}
+              className={`border-primary-active h-21 max-h-21 truncate rounded-md border px-0.5 py-1 text-center text-xs shadow-sm ${
+                date.toDateString() === today ? "bg-surface" : "bg-white"
+              }`}
+            >
+              <span className="text-xs">{date.getDate()}</span>
+              {dayAppointments.map((appointment) => {
+                const client = clients.find(
+                  (c) => c.id === appointment.clientId,
+                );
+                return (
+                  <p
+                    key={appointment.id}
+                    className="bg-secondary m-0.5 rounded-sm p-0.5"
+                  >
+                    {client?.name}
+                  </p>
+                );
+              })}
+            </Link>
+          );
+        })}
       </div>
     </div>
   );

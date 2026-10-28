@@ -1,8 +1,14 @@
+import { getAllAppointments, getClients } from "@/lib/actions";
 import MonthView from "./month-view";
-export default function CalendarPage() {
+
+export default async function CalendarPage() {
+  const appointments = await getAllAppointments();
+  const clients = await getClients();
+  //console.log("appointems", appointments);
+
   return (
-    <div >
-      <MonthView />
+    <div>
+      <MonthView appointments={appointments} clients={clients} />
     </div>
   );
 }

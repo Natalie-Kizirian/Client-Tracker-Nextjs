@@ -13,16 +13,7 @@ export default function ClientPage({ clients }) {
   const [showForm, setShowForm] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
 
-  // const filteredClients =
-  //   selectedStatus === "all"
-  //     ? clients
-  //     : clients.filter((s) => s.status === selectedStatus);
 
-  // const searchedClients = searchQuery
-  //   ? filteredClients.filter((c) =>
-  //       c.name.toLowerCase().startsWith(searchQuery.toLowerCase()),
-  //     )
-  //   : filteredClients;
   const visibleClients = clients.filter((c) => {
     const matchesStatus =
       selectedStatus === "all" || c.status === selectedStatus;
