@@ -4,7 +4,6 @@ import MonthView from "./month-view";
 export default async function CalendarPage() {
   const appointments = await getAllAppointments();
   const clients = await getClients();
-  //console.log("appointems", appointments);
 
   return (
     <div>

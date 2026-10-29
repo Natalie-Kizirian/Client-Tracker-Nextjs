@@ -1,6 +1,6 @@
 "use client";
 import { useState } from "react";
-import { getCalendarDays, getDateKey } from "@/lib/calendar";
+import { getCalendarDays, getDateKey, groupAppointmentsByDate } from "@/lib/calendar";
 import Link from "next/link";
 
 const WEEKDAYS = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
@@ -21,7 +21,7 @@ const MONTHS = [
 
 export default function MonthView({ appointments, clients }) {
   const [currentDate, setCurrentDate] = useState(new Date());
-
+console.log("appointments:", appointments, "clients:", clients);
   const days = getCalendarDays(currentDate); // οι μέρες του grid για τον τρέχοντα μήνα
   const today = new Date().toDateString();
 
@@ -36,13 +36,13 @@ export default function MonthView({ appointments, clients }) {
     1,
   );
   /* Appointments */
-  const appointmentsByDate = {};
-  for (const appointment of appointments) {
-    if (!appointmentsByDate[appointment.date]) {
-      appointmentsByDate[appointment.date] = [];
-    }
-    appointmentsByDate[appointment.date].push(appointment);
-  }
+  const appointmentsByDate = groupAppointmentsByDate(appointments);
+  // for (const appointment of appointments) {
+  //   if (!appointmentsByDate[appointment.date]) {
+  //     appointmentsByDate[appointment.date] = [];
+  //   }
+  //   appointmentsByDate[appointment.date].push(appointment);
+  // }
   //console.log(appointmentsByDate);
   //console.log("appointments:", appointments);
 
@@ -83,12 +83,13 @@ export default function MonthView({ appointments, clients }) {
         {days.map((date) => {
           const dateKey = getDateKey(date);
 
-          let dayAppointments;
-          if (appointmentsByDate[dateKey]) {
-            dayAppointments = appointmentsByDate[dateKey];
-          } else {
-            dayAppointments = [];
-          }
+          // let dayAppointments;
+          // if (appointmentsByDate[dateKey]) {
+          //   dayAppointments = appointmentsByDate[dateKey];
+          // } else {
+          //   dayAppointments = [];
+          // }
+           const dayAppointments = appointmentsByDate[dateKey] ?? [];
 
           return (
             <Link
